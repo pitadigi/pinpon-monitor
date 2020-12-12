@@ -6,8 +6,11 @@ let win;
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 800,
-    height: 600
+    width: 640,
+    height: 480,
+    kiosk: true,
+    'fullscreen': true,
+    'frame': false,
   });
   
   // load the dist folder from Angular

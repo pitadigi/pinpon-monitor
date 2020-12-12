@@ -1,15 +1,16 @@
 {
-  "name": "pinpon",
-  "version": "0.0.0",
-  "main": "main.js",
+  "name": "pinpon-monitor",
+  "version": "1.0.0",
+  "main": "electron.js",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start:dev": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "electron": "ng build --base-href ./ && electron"
+    "start:electron": "ng build --base-href ./ && electron .",
+    "build:armv7l": "rimraf ./release/pinpon-monitor-linux-armv7l && rimraf ./release/pinpon-monitor-linux-armv7l.zip && npx electron-packager . pinpon-monitor --platform=linux --arch=armv7l --out=release && cd release && npx bestzip pinpon-monitor-linux-armv7l.zip pinpon-monitor-linux-armv7l"
   },
   "private": true,
   "dependencies": {
@@ -18,10 +19,20 @@
     "@angular/compiler": "~10.1.5",
     "@angular/core": "~10.1.5",
     "@angular/forms": "~10.1.5",
+    "@angular/localize": "~10.1.5",
     "@angular/platform-browser": "~10.1.5",
     "@angular/platform-browser-dynamic": "~10.1.5",
     "@angular/router": "~10.1.5",
+    "@ng-bootstrap/ng-bootstrap": "^8.0.0",
+    "audio-loader": "^1.0.3",
+    "audio-play": "^2.2.1",
+    "bootstrap": "^4.5.0",
+    "chart.js": "^2.5.0",
+    "easy-pie-chart": "^2.1.7",
+    "hammerjs": "^2.0.8",
+    "ngx-mqtt": "^8.0.1",
     "rxjs": "~6.6.0",
+    "screenfull": "^3.3.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },
