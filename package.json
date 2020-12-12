@@ -10,7 +10,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "start:electron": "ng build --base-href ./ && electron .",
-    "build:armv7l": "rimraf ./release/pinpon-monitor-linux-armv7l && rimraf ./release/pinpon-monitor-linux-armv7l.zip && npx electron-packager . pinpon-monitor --platform=linux --arch=armv7l --out=release && cd release && npx bestzip pinpon-monitor-linux-armv7l.zip pinpon-monitor-linux-armv7l"
+    "build:armv7l": "npm run build && rimraf ./release/pinpon-monitor-linux-armv7l && rimraf ./release/pinpon-monitor-linux-armv7l.zip && npx electron-packager . pinpon-monitor --platform=linux --arch=armv7l --out=release && cd release && npx bestzip pinpon-monitor-linux-armv7l.zip pinpon-monitor-linux-armv7l"
   },
   "private": true,
   "dependencies": {
