@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import { MqttService } from 'ngx-mqtt';
 import { Subscription } from 'rxjs';
 import * as play from 'audio-play';
 import * as load from 'audio-loader';
 import { v4 as uuidv4 } from 'uuid';
-
+import { ElectronService } from 'ngx-electron';
+import * as mqtt from 'mqtt';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,6 +13,11 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class AppComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
+
+  /**
+   * config情報
+   */
+  config: any;
 
   /**
    * タイトル
@@ -23,24 +28,30 @@ export class AppComponent implements OnInit, OnDestroy {
    * motion url
    */
   safeMotionUrl: SafeResourceUrl;
-  motionUrl: string = 'http://192.168.1.200:8081';
+  motionUrl: string;
   intervalId: any = null;
+
+  /**
+   * MQTT Client
+   */
+  mqttClient: any;
 
   constructor(
     private readonly domSanitizer: DomSanitizer,
-    private readonly mqttService: MqttService,
+    private readonly electronService: ElectronService,
   ) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.config = await this.electronService.ipcRenderer.invoke('get-config', '');
+
+    this.motionUrl = this.config.monitor.url;
+
     this.showMotion();
 
     this.refreshMotion();
-    
-    this.subscription = this.mqttService.observe('pinpon').subscribe((message) => {
-      this.showMotion();
-      load('./assets/pinpon.wav').then(play);
-    });
+
+    this.subscribe();
   }
 
   ngOnDestroy() {
@@ -62,5 +73,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
   handleClose() {
     window.close();
+  }
+
+  private subscribe() {
+    const self = this;
+    this.mqttClient = mqtt.connect(this.config.mqtt.broker);
+
+    this.mqttClient.on('connect', () => {
+      self.mqttClient.subscribe(self.config.mqtt.topic);   
+    });
+
+    this.mqttClient.on('message', () => {
+      self.showMotion();
+      load('./assets/pinpon.wav').then(play);
+    });
   }
 }
