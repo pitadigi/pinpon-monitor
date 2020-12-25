@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import { Subscription } from 'rxjs';
 import * as play from 'audio-play';
 import * as load from 'audio-loader';
 import { v4 as uuidv4 } from 'uuid';
@@ -12,8 +11,6 @@ import * as mqtt from 'mqtt';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  private subscription: Subscription;
-
   /**
    * config情報
    */
@@ -56,7 +53,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     clearInterval(this.intervalId);
-    this.subscription.unsubscribe();
+    this.mqttClient.unsubscribe(this.config.mqtt.topic);
   }
 
   private refreshMotion() {
@@ -83,9 +80,12 @@ export class AppComponent implements OnInit, OnDestroy {
       self.mqttClient.subscribe(self.config.mqtt.topic);   
     });
 
-    this.mqttClient.on('message', () => {
-      self.showMotion();
-      load('./assets/pinpon.wav').then(play);
+    this.mqttClient.on('message', (topic, message) => {
+      if (topic === self.config.mqtt.topic
+        && message.toString() === self.config.mqtt.message) {
+          self.showMotion();
+          load('./assets/pinpon.wav').then(play);
+        }
     });
   }
 }
