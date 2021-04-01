@@ -3,17 +3,6 @@
 	"tasks": [
 		{
 			"type": "npm",
-			"script": "build:dev",
-			"problemMatcher": [],
-			"label": "npm: build:dev",
-			"detail": "npm run build:dev",
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			}
-		},
-		{
-			"type": "npm",
 			"script": "start:dev",
 			"problemMatcher": {
 				"owner": "custom",
