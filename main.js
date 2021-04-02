@@ -1,7 +1,15 @@
-const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url');
 const { loadConfig } = require('./load-config');
+const log = require('electron-log');
+
+process.on('uncaughtException', function(err) {
+  log.error('electron:event:uncaughtException');
+  log.error(err);
+  log.error(err.stack);
+  app.quit();
+});
 
 let win;
 
@@ -59,6 +67,7 @@ ipcMain.handle('get-config', (event, message) => {
   return loadConfig();
 });
 
+/*
 app.whenReady()
 .then(() => {
   globalShortcut.register('CommandOrControl+Q', () => {});
@@ -67,3 +76,4 @@ app.whenReady()
 app.on('will-quit', () => {
   globalShortcut.unregister('CommandOrControl+Q');
 });
+*/
