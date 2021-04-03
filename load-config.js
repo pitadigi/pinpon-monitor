@@ -1,6 +1,6 @@
-const fs = require('fs-extra');
+const fs = require('fs');
 const path = require('path');
 
 exports.loadConfig = function loadConfig() {
-    return fs.readJSONSync(path.join(__dirname, 'pinpon-monitor-config.json'));
+    return JSON.parse(fs.readFileSync(path.join(__dirname, 'pinpon-monitor-config.json'), 'utf8'));
 }
