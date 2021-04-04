@@ -1,12 +1,13 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
-const url = require('url');
-const { loadConfig } = require('./load-config');
+// const { loadConfig } = require('./load-config');
+const configPath = app.isPackaged ? path.join(process.resourcesPath, '/app/pinpon-monitor-config.json') : './app/pinpon-monitor-config.json';
+const config = require(configPath);
 
 let win;
 
 function createWindow() {
-  const config = loadConfig();
+  // const config = loadConfig();
 
   win = new BrowserWindow({
     width: config.window.width,
@@ -18,16 +19,14 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       backgroundThrottling: false,
+      webSecurity: false,
     },
   });
   
   // load the dist folder from Angular
-  win.loadURL(url.format({
-    pathname: path.join(__dirname, 'dist/index.html'),
-    protocol: 'file:',
-    slashes: true
-  }));
-  
+  const indexPath = `file://${app.isPackaged ? path.join(process.resourcesPath, '/app/dist/index.html') : path.join(__dirname, 'dist/index.html')}`;
+  win.loadURL(indexPath);
+
   // Open the DevTools optionally
   if (config.debug) {
     win.webContents.openDevTools();

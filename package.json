@@ -11,10 +11,21 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "start:electron": "ng build --base-href ./ && electron .",
-    "build:armv7l": "npm run build:prod; electron-builder build --linux zip --armv7l"
+    "build:armv7l": "rimraf ./package; npm run build:prod; electron-builder build --linux zip --armv7l"
   },
   "build": {
-    "appId": "jp.pitadigi.pinpon-monitor"
+    "appId": "jp.pitadigi.pinpon-monitor",
+    "directories": {
+      "buildResources": "build",
+      "output": "package"
+    },
+    "extraResources": [
+      "app",
+      {
+        "from": "dist",
+        "to": "app/dist"
+      }
+    ]
   },
   "private": true,
   "dependencies": {
