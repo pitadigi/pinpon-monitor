@@ -3,7 +3,7 @@
       "x": 0,
       "y": 0,
       "center": true,
-      "minimizable": false,
+      "maximize": true,
       "width": 800,
       "height": 600,
       "kiosk": false,

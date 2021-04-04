@@ -12,7 +12,12 @@
     "e2e": "ng e2e",
     "start:electron": "ng build --base-href ./ && electron .",
     "clean": "rimraf ./package; rimraf ./dist",
-    "build:armv7l": "npm run clean; npm run build:prod; electron-builder build --linux zip --armv7l"
+    "build:armv7l": "npm run clean; npm run build:prod; electron-builder build --linux zip --armv7l",
+    "build:arm64": "npm run clean; npm run build:prod; electron-builder build --linux deb --arm64"
+  },
+  "author": {
+    "name": "Koji Matae",
+    "email": "kmatae@pitadigi.jp"
   },
   "build": {
     "appId": "jp.pitadigi.pinpon-monitor",
