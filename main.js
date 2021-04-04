@@ -18,8 +18,6 @@ function createWindow() {
     backgroundColor: config.window.backgoundcolor,
     webPreferences: {
       nodeIntegration: true,
-      backgroundThrottling: false,
-      webSecurity: false,
     },
   });
   
@@ -55,7 +53,7 @@ app.on('activate', () => {
  * AngularからIPC経由で設定情報を要求されたら設定情報を返す
  */
 ipcMain.handle('get-config', (event, message) => {
-  return loadConfig();
+  return config;
 });
 
 /*
