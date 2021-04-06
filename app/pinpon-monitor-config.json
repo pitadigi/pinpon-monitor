@@ -9,6 +9,7 @@
       "kiosk": false,
       "fullscreen": false,
       "frame": true,
+      "menubar": false,
       "backgoundcolor": 0
     },
     "monitor": {

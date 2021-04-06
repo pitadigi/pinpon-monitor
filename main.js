@@ -16,7 +16,6 @@ function createWindow() {
     'fullscreen': config.window.fullscreen,
     'frame': config.window.frame,
     backgroundColor: config.window.backgoundcolor,
-    menuBarVisible: false,
     webPreferences: {
       nodeIntegration: true,
     },
@@ -37,6 +36,10 @@ function createWindow() {
 
   if (config.window.maximize) {
     win.maximize();
+  }
+
+  if (!config.window.menubar) {
+    win.removeMenu();
   }
 }
 
