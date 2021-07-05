@@ -83,6 +83,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.mqttClient.on('message', (topic, message) => {
       if (topic === self.config.mqtt.topic
         && message.toString() === self.config.mqtt.message) {
+          self.electronService.ipcRenderer.invoke('restore', '');
           self.showMotion();
           load('./assets/pinpon.wav').then(play);
         }

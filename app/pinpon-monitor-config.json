@@ -2,8 +2,9 @@
     "window": {
       "x": 0,
       "y": 0,
-      "center": true,
-      "maximize": true,
+      "center": false,
+      "maximize": false,
+      "minimize": true,
       "width": 800,
       "height": 600,
       "kiosk": false,
@@ -15,7 +16,7 @@
     "monitor": {
       "width": 600,
       "height": 480,
-      "url": "http://192.168.1.200:8081"
+      "url": "http://192.168.1.201:8081"
     },
     "mqtt": {
       "broker": "ws://192.168.1.201:9001",

@@ -10,8 +10,11 @@ function createWindow() {
   // const config = loadConfig();
 
   win = new BrowserWindow({
+    x: config.window.x,
+    y: config.window.y,
     width: config.window.width,
     height: config.window.height,
+    center: config.window.center,
     kiosk: config.window.kiosk,
     'fullscreen': config.window.fullscreen,
     'frame': config.window.frame,
@@ -38,6 +41,10 @@ function createWindow() {
     win.maximize();
   }
 
+  if (config.window.minimize) {
+    win.minimize();
+  }
+
   if (!config.window.menubar) {
     win.removeMenu();
   }
@@ -62,6 +69,13 @@ app.on('activate', () => {
  */
 ipcMain.handle('get-config', (event, message) => {
   return config;
+});
+
+/**
+ * AngularからIPC経由でウィンドウの復元
+ */
+ipcMain.handle('restore', (event, message) => {
+  win.restore();
 });
 
 /*

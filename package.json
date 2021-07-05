@@ -13,7 +13,7 @@
     "start:electron": "ng build --base-href ./ && electron .",
     "clean": "rimraf ./package; rimraf ./dist",
     "build:armv7l": "npm run clean; npm run build:prod; electron-builder build --linux zip --armv7l",
-    "build:arm64": "npm run clean; npm run build:prod; electron-builder build --linux deb --arm64"
+    "build:macx64": "npm run clean; npm run build:prod; electron-builder build --mac --x64"
   },
   "author": {
     "name": "Koji Matae",
@@ -24,6 +24,10 @@
     "directories": {
       "buildResources": "build",
       "output": "package"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "src/assets/pinpon.png"
     },
     "extraResources": [
       "app",
